@@ -1,4 +1,4 @@
-rootProject.name = 'userprofileApp'
+rootProject.name = 'groceries'
 
 include ':app'
 include ':react-native-vector-icons'

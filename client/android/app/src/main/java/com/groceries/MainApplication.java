@@ -1,4 +1,4 @@
-package com.userprofileapp;
+package com.groceries;
 
 import android.app.Application;
 import android.util.Log;
