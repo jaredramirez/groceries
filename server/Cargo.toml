@@ -1,0 +1,16 @@
+[package]
+name = "groceries"
+version = "0.1.0"
+authors = ["jaredramirez <jaredramirez@me.com>"]
+
+[dependencies]
+rustc-serialize = "0.3"
+
+iron = "0.4.*"
+router = "0.4.*"
+mount = { git = "https://github.com/iron/mount.git" }
+persistent = "0.0.6"
+
+bson = "0.3.1"
+mongodb = "0.1.6"
+chrono = { version = "0.2" } # , features = ["rustc-serialize"]
