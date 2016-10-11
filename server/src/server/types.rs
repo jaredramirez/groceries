@@ -7,7 +7,6 @@ use iron::typemap::Key;
 
 use mongodb::Client;
 use bson::oid::ObjectId;
-use chrono::{DateTime, UTC};
 
 pub struct DB;
 impl Key for DB {
@@ -18,8 +17,8 @@ pub struct User {
     pub id: ObjectId,
     pub email: String,
     pub password_hash: String,
-    pub created_at: DateTime<UTC>,
-    pub updated_at: DateTime<UTC>
+    pub created_at: i64,
+    pub updated_at: i64
 }
 
 impl ToJson for User {

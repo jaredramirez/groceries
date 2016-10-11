@@ -14,33 +14,49 @@ use bson::Bson;
 use super::types::{DB, User};
 
 pub fn default(req: &mut Request) -> IronResult<Response> {
-    Ok(Response::with( (status::Ok, "Recieved Request") ))
+    get_new_response(status::Ok, "Recieved Request".to_string())
 }
 
-pub fn id(req: &mut Request) -> IronResult<Response> {
+pub fn user_save(req: &mut Request) -> IronResult<Response> {
+    unimplemented!();
+}
+
+pub fn user_by_id(req: &mut Request) -> IronResult<Response> {
     let client = req.get::<Read<DB>>().unwrap();
     let collection = client.db("userprofile").collection("user");
 
-    let id = ObjectId::with_string(&get_property_from_query(req, &"id")).ok().unwrap(); // Add error handling
+    let id_creator = ObjectId::with_string(&get_property_from_query(req, &"id"));
+    if let Err(e) = id_creator {
+        return get_new_response(status::NotFound, e.to_string())
+    }
+    let id = id_creator.unwrap();
+
     let mut db_query_document = OrderedDocument::new();
-    // db_query_document.insert("_id", id);
     db_query_document.insert_bson("_id".to_string(), Bson::ObjectId(id));
 
-    let result = collection.find_one(Some(db_query_document), None).unwrap();
+    let result_creator = collection.find_one(Some(db_query_document), None);
+    if let Err(e) = result_creator {
+        return get_new_response(status::NotFound, e.to_string())
+    }
+    let result = result_creator.unwrap();
 
     if let Some(user_bson) = result {
         let user = User {
             id:            user_bson.get_object_id("_id").unwrap().clone(),
             email:         user_bson.get_str("email").unwrap().to_string(),
             password_hash: user_bson.get_str("passwordHash").unwrap().to_string(),
-            created_at:    user_bson.get_utc_datetime("createdAt").unwrap().clone(),
-            updated_at:    user_bson.get_utc_datetime("updatedAt").unwrap().clone()
+            created_at:    user_bson.get_i64("createdAt").unwrap().clone(),
+            updated_at:    user_bson.get_i64("updatedAt").unwrap().clone()
         };
 
-        return Ok(Response::with( (status::Ok, user.to_json().to_string()) ))
+        return get_new_response(status::Ok, user.to_json().to_string());
     }
 
-    Ok(Response::with( (status::NotFound, "Failed to get User!") ))
+    get_new_response(status::NotFound, "Failed to get User!".to_string())
+}
+
+fn get_new_response(status_code: status::Status, data: String) -> IronResult<Response> {
+    Ok(Response::with((status_code, data) ))
 }
 
 fn get_property_from_query(req: &mut Request, property: &str) -> String {

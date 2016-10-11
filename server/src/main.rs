@@ -20,8 +20,9 @@ fn main() {
         .expect("Failed to connnect to database");
 
     let router = router!{
-        index: get "/" => server::handlers::default,
-        id:    get "/:id" => server::handlers::id
+        index: get  "/" => server::handlers::default,
+        save:  post "/users" => server::handlers::user_save,
+        id:    get  "/users/:id" => server::handlers::user_by_id
     };
 
     let mut mount = Mount::new();
