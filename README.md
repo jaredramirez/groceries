@@ -1,3 +1,3 @@
-# user-profile
+# Groceries
 
-Login application with React-Native/Redux on the client side, and a golang on the server.
+Grocery List app with React-Native/Redux on the client side, and a Rust on the server.
