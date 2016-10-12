@@ -4,13 +4,14 @@ version = "0.1.0"
 authors = ["jaredramirez <jaredramirez@me.com>"]
 
 [dependencies]
-rustc-serialize = "0.3"
-
 iron = "0.4.*"
 router = "0.4.*"
 mount = { git = "https://github.com/iron/mount.git" }
 persistent = "0.0.6"
+bodyparser= { git = "https://github.com/iron/body-parser.git" }
+serde = "0.8"
+serde_derive = "0.8"
+serde_json = "0.8"
 
-bson = "0.3.1"
+bson = { version = "0.3.1", features = ["serde"] }
 mongodb = "0.1.6"
-chrono = { version = "0.2" } # , features = ["rustc-serialize"]
