@@ -4,11 +4,13 @@ version = "0.1.0"
 dependencies = [
  "bodyparser 0.4.1 (git+https://github.com/iron/body-parser.git)",
  "bson 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "chrono 0.2.25 (registry+https://github.com/rust-lang/crates.io-index)",
  "iron 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "mongodb 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "mount 0.2.1 (git+https://github.com/iron/mount.git)",
  "persistent 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "router 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.3.19 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 0.8.12 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 0.8.12 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 0.8.2 (registry+https://github.com/rust-lang/crates.io-index)",
