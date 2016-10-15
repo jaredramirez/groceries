@@ -11,8 +11,8 @@ use mongodb::{Client, ThreadedClient};
 
 const MAX_BODY_LENGTH: usize = 1024 * 1024 * 10;
 
-pub fn get_new_handler() -> Chain {
-    let client: Client = Client::connect("localhost", 27017)
+pub fn get_new_handler_local(host: &str, port: u16) -> Chain {
+    let client: Client = Client::connect(host, port)
         .ok()
         .expect("Failed to connnect to database");
 

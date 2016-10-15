@@ -92,6 +92,7 @@ pub fn read_by_id(req: &mut Request) -> IronResult<Response> {
     utils::get_new_response(status::NotFound, Some("\"Failed to get User!\"".to_string()))
 }
 
+// ERROR HANDLING NOT WORKING
 pub fn update_by_id(req: &mut Request) -> IronResult<Response> {
     let req_body_result = req.get::<bodyparser::Struct<User>>();
     if let Ok(None) = req_body_result {
