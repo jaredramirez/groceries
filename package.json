@@ -1,17 +1,17 @@
 {
-  "name": "user-profile",
-  "version": "1.0.0",
-  "description": "Login application with React-Native/Redux on the client side, and a golang on the server.",
+  "name": "groceries",
+  "version": "0.0.1",
+  "description": "Grocery list application with React-Native/Redux on the client side, and a rust on the server.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaredramirez/user-profile.git"
+    "url": "git+https://github.com/jaredramirez/groceries.git"
   },
-  "author": "Jared Ramirez <jared.ramirez@bytepushers.software> (http://bytepushers.software)",
-  "license": "ISC",
+  "author": "Jared Ramirez <jaredramirez@me.com>",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jaredramirez/user-profile/issues"
+    "url": "https://github.com/jaredramirez/groceries/issues"
   },
-  "homepage": "https://github.com/jaredramirez/user-profile#readme",
+  "homepage": "https://github.com/jaredramirez/groceries#readme",
   "devDependencies": {
     "babel-eslint": "^6.1.2",
     "eslint": "^3.6.1",
