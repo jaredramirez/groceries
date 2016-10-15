@@ -1,3 +1,9 @@
+use super::utils;
+use super::super::models::traits::ToDoc;
+use super::super::models::structs::{DB, User};
+
+use std::error::Error;
+
 use iron::prelude::*;
 use iron::status;
 use persistent::Read;
@@ -9,10 +15,6 @@ use mongodb::ThreadedClient;
 use bson::ordered::OrderedDocument;
 use bson::oid::ObjectId;
 use bson::Bson;
-
-use super::utils;
-use super::super::traits::ToDoc;
-use super::super::types::{DB, User};
 
 pub fn read_all(req: &mut Request) -> IronResult<Response> {
     let client = req.get::<Read<DB>>().unwrap();
@@ -27,6 +29,7 @@ pub fn read_all(req: &mut Request) -> IronResult<Response> {
                 id:            user_bson.get_object_id("_id").unwrap().clone(),
                 email:         user_bson.get_str("email").unwrap().to_string(),
                 password_hash: user_bson.get_str("passwordHash").unwrap().to_string(),
+                lists:         vec![],
                 created_at:    user_bson.get_utc_datetime("createdAt").unwrap().clone(),
                 updated_at:    user_bson.get_utc_datetime("updatedAt").unwrap().clone()
             };
@@ -78,6 +81,7 @@ pub fn read_by_id(req: &mut Request) -> IronResult<Response> {
             id:            user_bson.get_object_id("_id").unwrap().clone(),
             email:         user_bson.get_str("email").unwrap().to_string(),
             password_hash: user_bson.get_str("passwordHash").unwrap().to_string(),
+            lists:         vec![],
             created_at:    user_bson.get_utc_datetime("createdAt").unwrap().clone(),
             updated_at:    user_bson.get_utc_datetime("updatedAt").unwrap().clone()
         };
@@ -91,15 +95,15 @@ pub fn read_by_id(req: &mut Request) -> IronResult<Response> {
 pub fn update_by_id(req: &mut Request) -> IronResult<Response> {
     let req_body_result = req.get::<bodyparser::Struct<User>>();
     if let Ok(None) = req_body_result {
-        return utils::get_new_response(status::NotModified, Some("\"No request body found!\"".to_string()));
+        return utils::get_new_response(status::NotModified, Some("\"No request body found!\"".to_string()))
     } else if let Err(err) = req_body_result {
-        return utils::get_new_response(status::NotModified, Some(err.to_string()));
+        return utils::get_new_response(status::NotModified, Some(err.description().to_string()))
     }
     let user = req_body_result.unwrap().unwrap();
 
     let id_result = ObjectId::with_string(&utils::get_property_from_query(req, &"userId"));
     if let Err(e) = id_result {
-        return utils::get_new_response(status::NotModified, Some(e.to_string()))
+        return utils::get_new_response(status::NotModified, Some(e.description().to_string()))
     }
     let id = id_result.unwrap();
 

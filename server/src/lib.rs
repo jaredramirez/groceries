@@ -1,7 +1,11 @@
 #![feature(proc_macro)]
 
 extern crate iron;
+#[macro_use]
 extern crate router;
+extern crate logger;
+extern crate mount;
+#[macro_use]
 extern crate persistent;
 extern crate bodyparser;
 extern crate serde;

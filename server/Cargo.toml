@@ -3,6 +3,11 @@ name = "groceries"
 version = "0.1.0"
 authors = ["jaredramirez <jaredramirez@me.com>"]
 
+[lib]
+
+name = "groceries"
+path = "src/lib.rs"
+
 [dependencies]
 iron = "0.4.*"
 router = "0.4.*"

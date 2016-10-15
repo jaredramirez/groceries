@@ -8,9 +8,10 @@ pub fn get_new_response(status_code: status::Status, data: Option<String>) -> Ir
         payload.push_str(&content);
         payload.push_str("}");
 
+        println!("payload: {:?}", payload);
+
         return Ok(Response::with((status_code, payload)))
     }
-
     Ok(Response::with((status_code)))
 }
 

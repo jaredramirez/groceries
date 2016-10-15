@@ -1,3 +1,7 @@
+// use super::utils;
+// use super::super::traits::ToDoc;
+// use super::super::types::{DB, User};
+
 use iron::prelude::*;
 // use iron::status;
 // use persistent::Read;
@@ -9,10 +13,6 @@ use iron::prelude::*;
 // use bson::ordered::OrderedDocument;
 // use bson::oid::ObjectId;
 // use bson::Bson;
-//
-// use super::utils;
-// use super::super::traits::ToDoc;
-// use super::super::types::{DB, User};
 
 pub fn read_all(req: &mut Request) -> IronResult<Response> {
     unimplemented!();
