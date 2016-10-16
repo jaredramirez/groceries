@@ -1,11 +1,8 @@
 import jwt_decode from 'jwt-decode'
-import {
-  REQUEST_USER,
-  RECIEVE_USER_SUCCESS,
-  RECIEVE_USER_ERROR,
-  SAVE_USER,
-  DELETE_USER
-} from './types'
+
+export const REQUEST_USER = 'REQUEST_USER'
+export const RECIEVE_USER_SUCCESS = 'RECIEVE_USER_SUCCESS'
+export const RECIEVE_USER_ERROR = 'RECIEVE_USER_ERROR'
 
 export const requestUser = () => {
   return{type: REQUEST_USER}
@@ -43,12 +40,4 @@ export const fetchUser = (token) => {
       })
       .catch(error => dispatch(recieveUserError(error)))
   }
-}
-
-export const saveUser = (token, user) => {
-  return{type: SAVE_USER, token, user}
-}
-
-export const deleteUser = (token, user) => {
-  return {type: DELETE_USER, token, user}
 }

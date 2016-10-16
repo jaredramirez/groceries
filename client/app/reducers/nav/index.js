@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { INIT_ROUTES, REPLACE_ROUTE, PUSH_ROUTE, POP_ROUTE } from './../../actions/types'
+import { INIT_ROUTES, REPLACE_ROUTE, PUSH_ROUTE, POP_ROUTE } from './../../actions/nav'
 import { updateObject, createReducer } from './../utility'
 
 const initRoutes = (state, action) =>

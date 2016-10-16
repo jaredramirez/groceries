@@ -3,7 +3,7 @@ import {
   RECIEVE_USER_SUCCESS,
   RECIEVE_USER_ERROR,
   DELETE_TOKEN
-} from './../../actions/types'
+} from './../../actions/user'
 import { updateObject, createReducer } from './../utility'
 
 const requestUser = (state, action) =>

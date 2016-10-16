@@ -1,4 +1,4 @@
-import { SET_CURRENT_GROCERY_LIST, CREATE_GROCERY_LIST, CREATE_GROCERY_ITEM } from './../../actions/types'
+import { SET_CURRENT_GROCERY_LIST, CREATE_GROCERY_LIST, CREATE_GROCERY_ITEM } from './../../actions/grocery'
 import { updateObject, createReducer } from './../utility'
 
 const setCurrentGroceryList = (state, action) => updateObject(state, { currentListId: action.id })

@@ -1,10 +1,9 @@
 import jwt_decode from 'jwt-decode'
-import {
-  REQUEST_TOKEN,
-  RECIEVE_TOKEN_SUCCESS,
-  RECIEVE_TOKEN_ERROR,
-  DELETE_TOKEN
-} from './types'
+
+export const REQUEST_TOKEN = 'REQUEST_TOKEN'
+export const RECIEVE_TOKEN_SUCCESS = 'RECIEVE_TOKEN_SUCCESS'
+export const RECIEVE_TOKEN_ERROR = 'RECIEVE_TOKEN_ERROR'
+export const DELETE_TOKEN = 'DELETE_TOKEN'
 
 import { recieveUserSuccess } from './user'
 

@@ -1,4 +1,4 @@
-import { CREATE_GROCERY_ITEM, TOGGLE_GROCERY_ITEM, REMOVE_GROCERY_ITEM } from './../../actions/types'
+import { CREATE_GROCERY_ITEM, TOGGLE_GROCERY_ITEM, REMOVE_GROCERY_ITEM } from './../../actions/grocery'
 import { updateObject, updateArray, createReducer } from './../utility'
 
 const createGroceryItem = (state, action) =>

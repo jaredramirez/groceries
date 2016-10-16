@@ -3,7 +3,7 @@ import { AsyncStorage, ActivityIndicator } from 'react-native'
 import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
 import store from './store'
-import * as ActionTypes from './actions/types'
+import * as nav from './actions/nav'
 
 import Router from './containers/router'
 import Drawer from './scenes/drawer'
@@ -28,15 +28,13 @@ export default class App extends Component {
     super()
     this.state = { rehydrated: false }
   }
-
   componentWillMount(){
     persistStore(store, {
       storage: AsyncStorage,
-      blacklist: [ActionTypes.INIT_ROUTES,ActionTypes.REPLACE_ROUTE,ActionTypes.PUSH_ROUTE,ActionTypes.POP_ROUTE,ActionTypes.UI_TOGGLE_DRAWER]
+      blacklist: [nav.INIT_ROUTES,nav.REPLACE_ROUTE,nav.PUSH_ROUTE,nav.POP_ROUTE,nav.UI_TOGGLE_DRAWER]
     }, () => {
       this.setState({ rehydrated: true })
     })
-    persistStore(store, {storage: AsyncStorage}).purge()
   }
   render() {
     if(!this.state.rehydrated){
@@ -47,5 +45,8 @@ export default class App extends Component {
         <Router routeMap={routeMap} />
       </Provider>
     )
+  }
+  _clearStore() {
+    persistStore(store, {storage: AsyncStorage}).purge()
   }
 }

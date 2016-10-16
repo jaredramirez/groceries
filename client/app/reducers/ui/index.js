@@ -1,5 +1,4 @@
-import { UI_TOGGLE_DRAWER } from './../../actions/types'
-// import * as ActionTypes from './../../actions/types'
+import { UI_TOGGLE_DRAWER } from './../../actions/ui'
 import { updateObject, createReducer } from './../utility'
 
 const uiToggleDrawer = (state, action) => {

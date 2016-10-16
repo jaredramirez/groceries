@@ -1,4 +1,4 @@
-import { REQUEST_TOKEN, RECIEVE_TOKEN_SUCCESS, RECIEVE_TOKEN_ERROR, DELETE_TOKEN } from './../../actions/types'
+import { REQUEST_TOKEN, RECIEVE_TOKEN_SUCCESS, RECIEVE_TOKEN_ERROR, DELETE_TOKEN } from './../../actions/token'
 import { updateObject, createReducer } from './../utility'
 
 const requestToken = (state, action) => updateObject(state, { isFetching: true })

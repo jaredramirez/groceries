@@ -1,5 +1,5 @@
 import _fp from 'lodash/fp'
-import { CREATE_GROCERY_LIST, REMOVE_GROCERY_LIST, CREATE_GROCERY_ITEM, REMOVE_GROCERY_ITEM } from './../../actions/types'
+import { CREATE_GROCERY_LIST, REMOVE_GROCERY_LIST, CREATE_GROCERY_ITEM, REMOVE_GROCERY_ITEM } from './../../actions/grocery'
 
 import { updateArray, createReducer } from './../utility'
 
