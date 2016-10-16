@@ -11,11 +11,29 @@ use mongodb::{Client, ThreadedClient};
 
 const MAX_BODY_LENGTH: usize = 1024 * 1024 * 10;
 
-pub fn get_new_handler_local(host: &str, port: u16) -> Chain {
+// new_local creates new router with local MongoDB client
+// Params: host &str, port u16
+pub fn new_local(host: &str, port: u16) -> Chain {
     let client: Client = Client::connect(host, port)
         .ok()
-        .expect("Failed to connnect to database");
+        .expect("Failed to initialize client.");
 
+    get_new_router(client)
+}
+
+// new_remote creates new router with remote MongoDB client
+// Params: URI string
+pub fn new_remote(uri: &str) -> Chain {
+    let client = Client::with_uri(uri)
+        .ok()
+        .expect("Failed to initialize client.");
+
+    get_new_router(client)
+}
+
+// get_new_router creates and links router with paths and all middleware
+// Params: client mongodb::Client
+fn get_new_router(client: Client) -> Chain {
     let router = router!{
         userReadAll:     get     ""         => handlers::user::read_all,
         userCreate:      post    ""         => handlers::user::create,
@@ -35,13 +53,13 @@ pub fn get_new_handler_local(host: &str, port: u16) -> Chain {
 
     let (logger_before, logger_after) = Logger::new(None);
 
-    let mut handler = Chain::new(mount);
-    handler.link_before(logger_before);
-    handler.link_before(Read::<bodyparser::MaxBodyLength>::one(MAX_BODY_LENGTH));
-    handler.link(
+    let mut chain = Chain::new(mount);
+    chain.link_before(logger_before);
+    chain.link_before(Read::<bodyparser::MaxBodyLength>::one(MAX_BODY_LENGTH));
+    chain.link(
         Read::<structs::DB>::both(client)
     );
-    handler.link_after(logger_after);
+    chain.link_after(logger_after);
 
-    handler
+    chain
 }
