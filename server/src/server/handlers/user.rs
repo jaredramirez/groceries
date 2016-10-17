@@ -21,7 +21,11 @@ pub fn read_all(req: &mut Request) -> IronResult<Response> {
     let collection = client.db("userprofile").collection("user");
 
     let mut users = vec![];
-    let cursor = collection.find(None, None).unwrap();
+    let cursor_result = collection.find(None, None);
+    if let Err(e) = cursor_result {
+        return utils::get_new_response(status::NotFound, Some(e.description().to_string()));
+    }
+    let cursor = cursor_result.unwrap();
 
     for result in cursor {
         if let Ok(user_bson) = result {
@@ -52,7 +56,16 @@ pub fn create(req: &mut Request) -> IronResult<Response> {
     let client = req.get::<Read<DB>>().unwrap();
     let collection = client.db("userprofile").collection("user");
 
-    collection.insert_one(user.to_doc().clone(), None).unwrap();
+    let insert_result = collection.insert_one(user.to_doc().clone(), None);
+    if let Ok(insert_one_result) = insert_result {
+        if let Some(write_exception) = insert_one_result.write_exception {
+                return utils::get_new_response(status::Conflict, Some(write_exception.message));
+        }
+        return utils::get_new_response(status::Conflict, Some("Error inserting new document into client.".to_string()));
+    } else if let Err(e) = insert_result {
+        return utils::get_new_response(status::Conflict, Some(e.description().to_string()));
+    }
+    insert_result.unwrap();
 
     utils::get_new_response(status::Created, None)
 }
