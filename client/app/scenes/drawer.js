@@ -35,12 +35,6 @@ const styles = StyleSheet.create({
 })
 
 class SidemenuView extends Component {
-  openDrawer() {
-    this._drawer.open()
-  }
-  closeDrawer() {
-    this._drawer.close()
-  }
   componentWillReceiveProps(nextProps) {
     if(nextProps.ui.drawerIsOpen === true)
       this.openDrawer()
@@ -61,27 +55,32 @@ class SidemenuView extends Component {
       </Drawer>
     )
   }
-
-  /*
-  NOTE: NOT SAME AS COMPONENT PROPS
-  'navProps' {
-    routeMap: {...routes},
-    backButtonDisabled: bool,
-    nav: {routes: ..., current: ...},
-    grocery: {meta: ..., list: ..., items: ...},
-    ui: { drawerIsOpen: bool},
-    actions: [pushRoute, popRoute, etc]
+  openDrawer = () => {
+    this._drawer.open()
+  }
+  closeDrawer = () => {
+    this._drawer.close()
   }
 
-   */
-   static renderNavbarLeftButton(props) {
-    let { actions } = props
+  /*
+  NOTE: renderNavbar* props not same as component props
+    'navProps' {
+      routeMap: {...routes},
+      backButtonDisabled: bool,
+      nav: {routes: ..., current: ...},
+      grocery: {meta: ..., list: ..., items: ...},
+      ui: { drawerIsOpen: bool},
+      actions: [pushRoute, popRoute, etc]
+    }
+  */
+  static renderNavbarLeftButton(navProps) {
+    let { actions } = navProps
     return <TouchableOpacity style={styles.navbarLeftButton} onPress={actions.uiToggleDrawer} >
       <Icon name="list" size={32} color="white" />
     </TouchableOpacity>
    }
-  static renderNavbarTitle(props) {
-    let { grocery } = props
+  static renderNavbarTitle(navProps) {
+    let { grocery } = navProps
     return <Text style={styles.navTitle}>{grocery.lists[grocery.meta.currentListId].name}</Text>
   }
 

@@ -19,9 +19,6 @@ class GroceryContainer extends Component {
     this.state = {
       groceryListItems: this.props.grocery.lists[index].items
     }
-
-    this.renderHeader = this.renderHeader.bind(this)
-    this.renderRow = this.renderRow.bind(this)
   }
   componentWillReceiveProps(nextProps) {
     let { lists, meta } = nextProps.grocery
@@ -46,15 +43,14 @@ class GroceryContainer extends Component {
         shouldRenderSeparator={true}/>
     )
   }
-  renderHeader() {
+  renderHeader = () => {
     return <ItemCreateContainer />
   }
-  renderRow(rowData) {
+  renderRow = (rowData) => {
     return (
       <ItemContainer item={rowData}/>
     )
   }
-
 
   static propTypes = {
     grocery: React.PropTypes.object.isRequired

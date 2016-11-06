@@ -18,10 +18,6 @@ class Sidemenu extends Component {
     this.state = {
       groceryLists: props.grocery.lists
     }
-    this._renderHeader = this._renderHeader.bind(this)
-    this._renderRow = this._renderRow.bind(this)
-    this._renderFooter = this._renderFooter.bind(this)
-    this._selectList = this._selectList.bind(this)
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -39,13 +35,13 @@ class Sidemenu extends Component {
       />
     )
   }
-  _renderHeader() {
+  _renderHeader = () => {
     let { grocery } = this.props
     return (
       <ListHeader currentListName={grocery.lists[grocery.meta.currentListId].name} />
     )
   }
-  _renderRow(rowData) {
+  _renderRow = (rowData) => {
     let { id, name } = rowData
     return (
       <ListTouchableText
@@ -53,10 +49,10 @@ class Sidemenu extends Component {
         onPress={() => this._selectList(id)}/>
     )
   }
-  _renderFooter() {
+  _renderFooter = () => {
     return <ListCreateContainer />
   }
-  _selectList(id) {
+  _selectList = (id) =>  {
     this.props.actions.setCurrentGroceryList(id)
     this.props.actions.uiToggleDrawer()
   }

@@ -7,16 +7,12 @@ import { createGroceryItem } from './../../actions/grocery'
 import ListItemCreateForm from './../../components/ListItemCreateForm'
 
 class CreateGroceryItem extends Component {
-  constructor(props) {
-    super(props)
-    this.create = this.create.bind(this)
-  }
   render() {
     return (
       <ListItemCreateForm create={this.create} />
     )
   }
-  create(name, quantity) {
+  create = (name, quantity) => {
     let { grocery, actions } = this.props,
         item = {
           id: (grocery.meta.itemId + 1),
@@ -26,6 +22,7 @@ class CreateGroceryItem extends Component {
         }
     actions.createGroceryItem(grocery.meta.currentListId, item)
   }
+  
   static propTypes = {
     grocery: React.PropTypes.object.isRequired,
     actions: React.PropTypes.object.isRequired,

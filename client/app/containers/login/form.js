@@ -8,10 +8,6 @@ import { popRoute } from './../../actions/nav'
 import LoginForm from './../../components/LoginForm'
 
 class Form extends Component {
-  constructor(props) {
-    super(props)
-    this.login = this.login.bind(this)
-  }
   componentWillReceiveProps(nextProps) {
     if(nextProps.auth.token !== null)
       nextProps.actions.popRoute()
@@ -25,7 +21,7 @@ class Form extends Component {
         token={this.props.auth.token}/>
     )
   }
-  login(email, password) {
+  login = (email, password) => {
     this.props.actions.fetchToken({ email, password })
   }
   static propTypes = {

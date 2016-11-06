@@ -15,6 +15,6 @@ pub fn get_new_response(status_code: status::Status, data: Option<String>) -> Ir
     Ok(Response::with((status_code)))
 }
 
-pub fn get_property_from_query(req: &mut Request, property: &str) -> String {
+pub fn get_property_from_path_params(req: &mut Request, property: &str) -> String {
     req.extensions.get::<Router>().unwrap().find(property).unwrap_or("/").to_string()
 }

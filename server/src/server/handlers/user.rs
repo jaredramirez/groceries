@@ -74,7 +74,7 @@ pub fn read_by_id(req: &mut Request) -> IronResult<Response> {
     let client = req.get::<Read<DB>>().unwrap();
     let collection = client.db("userprofile").collection("user");
 
-    let id_result = ObjectId::with_string(&utils::get_property_from_query(req, &"userId"));
+    let id_result = ObjectId::with_string(&utils::get_property_from_path_params(req, &"userId"));
     if let Err(e) = id_result {
         return utils::get_new_response(status::NotFound, Some(e.to_string()))
     }
@@ -115,7 +115,7 @@ pub fn update_by_id(req: &mut Request) -> IronResult<Response> {
     }
     let user = req_body_result.unwrap().unwrap();
 
-    let id_result = ObjectId::with_string(&utils::get_property_from_query(req, &"userId"));
+    let id_result = ObjectId::with_string(&utils::get_property_from_path_params(req, &"userId"));
     if let Err(e) = id_result {
         return utils::get_new_response(status::NotModified, Some(e.description().to_string()))
     }
@@ -146,7 +146,7 @@ pub fn remove_by_id(req: &mut Request) -> IronResult<Response> {
     let client = req.get::<Read<DB>>().unwrap();
     let collection = client.db("userprofile").collection("user");
 
-    let id_result = ObjectId::with_string(&utils::get_property_from_query(req, &"userId"));
+    let id_result = ObjectId::with_string(&utils::get_property_from_path_params(req, &"userId"));
     if let Err(e) = id_result {
         return utils::get_new_response(status::NotFound, Some(e.to_string()))
     }

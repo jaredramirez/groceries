@@ -61,19 +61,6 @@ const styles = StyleSheet.create({
 })
 
 export default class List extends Component {
-  constructor(props){
-    super(props)
-    this._toggle = this._toggle.bind(this)
-    this._remove = this._remove.bind(this)
-  }
-  _toggle(item) {
-    this.props.toggle(item)
-    this._row.closeRow()
-  }
-  _remove(item) {
-    this.props.remove(item)
-    this._row.closeRow()
-  }
   render() {
     let item = this.props.item,
         checkmark = (item.isCompleted) ?
@@ -122,6 +109,14 @@ export default class List extends Component {
 
       </SwipeRow>
     )
+  }
+  _toggle = (item) => {
+    this.props.toggle(item)
+    this._row.closeRow()
+  }
+  _remove = (item) => {
+    this.props.remove(item)
+    this._row.closeRow()
   }
 
   static propTypes = {

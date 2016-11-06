@@ -27,7 +27,6 @@ pub struct User {
     #[serde(rename="updatedAt", serialize_with="utils::date_serialize", deserialize_with="utils::date_deserialize")]
     pub updated_at: DateTime<UTC>
 }
-
 impl ToDoc for User {
     fn to_doc_without_id(&self) -> OrderedDocument {
         doc!{

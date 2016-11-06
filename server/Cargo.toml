@@ -20,6 +20,7 @@ serde_derive = "0.8"
 serde_json = "0.8"
 chrono = "0.2.25"
 rustc-serialize = "0.3.19"
+jwt = "0.4.0"
 
 bson = { version = "0.3.1", features = ["serde"] }
 mongodb = "0.1.6"

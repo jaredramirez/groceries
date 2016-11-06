@@ -19,7 +19,6 @@ export default class List extends Component {
     this.state = {
       dataSource: dataSource.cloneWithRows(props.data)
     }
-    this._renderSeparator = this._renderSeparator.bind(this)
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -39,7 +38,7 @@ export default class List extends Component {
       />
     )
   }
-  _renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
+  _renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
     return (
       <View
         key={`${sectionID}-${rowID}`}

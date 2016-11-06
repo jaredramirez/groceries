@@ -94,7 +94,6 @@ export default class ListItemCreateForm extends Component {
       nameError: false,
       quantityError: false
     }
-    this._create = this._create.bind(this)
   }
   render() {
     let style = (this.props.style) ? this.props.style : {},
@@ -137,7 +136,7 @@ export default class ListItemCreateForm extends Component {
       </View>
     )
   }
-  _create(name, quantity) {
+  _create = (name, quantity) => {
     // Cast to number
     quantity = parseInt(quantity)
 

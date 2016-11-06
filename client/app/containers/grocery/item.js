@@ -7,19 +7,6 @@ import { toggleGroceryItem, removeGroceryItem } from './../../actions/grocery'
 import ListItem from './../../components/ListItem'
 
 class GroceryItem extends Component {
-  constructor(props){
-    super(props)
-    this.toggle = this.toggle.bind(this)
-    this.remove = this.remove.bind(this)
-  }
-  toggle(item) {
-    let { grocery } = this.props
-    this.props.actions.toggleGroceryItem(grocery.meta.currentListId, item)
-  }
-  remove(item) {
-    let { grocery } = this.props
-    this.props.actions.removeGroceryItem(grocery.meta.currentListId, item)
-  }
   render() {
     return (
       <ListItem
@@ -27,6 +14,14 @@ class GroceryItem extends Component {
         toggle={this.toggle}
         remove={this.remove}/>
     )
+  }
+  toggle = (item) => {
+    let { grocery } = this.props
+    this.props.actions.toggleGroceryItem(grocery.meta.currentListId, item)
+  }
+  remove = (item) => {
+    let { grocery } = this.props
+    this.props.actions.removeGroceryItem(grocery.meta.currentListId, item)
   }
 
   static propTypes = {

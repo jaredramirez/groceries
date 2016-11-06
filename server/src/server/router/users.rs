@@ -1,3 +1,4 @@
+use super::super::controllers::users::UserController;
 use server::handlers;
 
 use router::Router;

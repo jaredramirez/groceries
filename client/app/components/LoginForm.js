@@ -76,6 +76,7 @@ export default class LoginForm extends Component {
       </View>
     )
   }
+  
   static propTypes = {
     login: React.PropTypes.func.isRequired,
     isFetching: React.PropTypes.bool.isRequired,

@@ -8,16 +8,12 @@ import { uiToggleDrawer } from './../../actions/ui'
 import ListCreateForm from './../../components/ListCreateForm'
 
 class CreateGroceryList extends Component {
-  constructor(props) {
-    super(props)
-    this.create = this.create.bind(this)
-  }
   render() {
     return (
       <ListCreateForm create={this.create}/>
     )
   }
-  create(newListName) {
+  create = (newListName) => {
     let { grocery, actions } = this.props,
         list =  {
           id: (grocery.meta.listId + 1),

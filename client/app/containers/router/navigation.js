@@ -35,11 +35,6 @@ const styles = StyleSheet.create({
 })
 
 export default class Navigation extends Component {
-  constructor(props) {
-    super(props)
-    // this._renderScene = this._renderScene.bind(this)
-    this._navigationBarRouteMapper = this._navigationBarRouteMapper.bind(this)
-  }
   render() {
     let { routeMap, nav } = this.props
     const RouteComponent = SceneHOC(routeMap[nav.current].component)
@@ -57,7 +52,7 @@ export default class Navigation extends Component {
       />
     )
   }
-  _navigationBarRouteMapper() {
+  _navigationBarRouteMapper = () => {
     let { nav, actions, routeMap } = this.props,
         props = this.props
 

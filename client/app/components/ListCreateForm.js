@@ -51,7 +51,6 @@ export default class ListCreateForm extends Component {
       newListName: null,
       newListNameError: false
     }
-    this._create = this._create.bind(this)
   }
   render() {
     let style = (this.props.style) ? this.props.style : {}
@@ -76,7 +75,7 @@ export default class ListCreateForm extends Component {
       </View>
     )
   }
-  _create(newListName) {
+  _create = (newListName) => {
     this.setState({
       newListNameError: false
     })
@@ -90,6 +89,7 @@ export default class ListCreateForm extends Component {
 
     this.props.create(newListName)
   }
+
   static propTypes = {
     create: React.PropTypes.func.isRequired
   }
