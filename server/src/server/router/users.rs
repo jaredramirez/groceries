@@ -1,19 +1,21 @@
-use super::super::controllers::users::UserController;
-use server::handlers;
+use server::handlers::user;
+use server::controllers::traits::Controller;
+use server::controllers::users::UserController;
 
-use router::Router;
+use iron::prelude::*;
 use mount::Mount;
+use mongodb::Client;
 
-pub fn mount_router(mount: &mut Mount) -> &mut Mount {
-    mount.mount("/api/v1/users", get_routes())
-}
+pub fn mount_router(mount: &mut Mount, client: Client) -> &mut Mount {
+    let controller = UserController::new(client);
 
-fn get_routes() -> Router {
-    router! {
-        userReadAll:     get     ""         => handlers::user::read_all,
-        userCreate:      post    ""         => handlers::user::create,
-        userReadById:    get     "/:userId" => handlers::user::read_by_id,
-        userUpdateById:  put     "/:userId" => handlers::user::update_by_id,
-        userRemoveById:  delete  "/:userId" => handlers::user::remove_by_id,
-    }
+    let router = router! {
+        userCreate:      post    ""         => move |r: &mut Request| user::create(r, &controller),
+        userReadAll:     get     ""         => move |r: &mut Request| user::read_all(r, &controller),
+        userReadById:    get     "/:userId" => user::read_by_id,
+        userUpdateById:  put     "/:userId" => user::update_by_id,
+        userRemoveById:  delete  "/:userId" => user::remove_by_id,
+    };
+
+    mount.mount("/api/v1/users", router)
 }

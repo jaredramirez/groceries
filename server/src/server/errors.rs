@@ -1,5 +1,6 @@
 use std::error;
 use std::fmt;
+
 use mongodb;
 
 #[derive(Debug)]
@@ -23,8 +24,8 @@ impl From<String> for QueryError {
 impl fmt::Display for QueryError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            QueryError::MongoError(ref err) => write!(f, "Mongo error: {}", err),
-            QueryError::DefaultError(ref err) => write!(f, "Error: {}", err),
+            QueryError::MongoError(ref err) => write!(f, "{}", err),
+            QueryError::DefaultError(ref err) => write!(f, "{}", err),
         }
     }
 }
@@ -40,7 +41,7 @@ impl error::Error for QueryError {
     fn cause(&self) -> Option<&error::Error> {
         match *self {
             QueryError::MongoError(ref err) => Some(err),
-            QueryError::DefaultError(ref err) => None,
+            QueryError::DefaultError(_) => None,
         }
     }
 }

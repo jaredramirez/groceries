@@ -36,7 +36,7 @@ pub fn new_remote(uri: &str) -> Chain {
 fn get_new_router(client: Client) -> Chain {
     let mut mount = Mount::new();
     authentication::mount_router(&mut mount);
-    users::mount_router(&mut mount);
+    users::mount_router(&mut mount, client.clone());
     lists::mount_router(&mut mount);
 
     let (logger_before, logger_after) = Logger::new(None);

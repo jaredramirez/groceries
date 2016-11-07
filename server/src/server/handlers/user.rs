@@ -1,6 +1,8 @@
+use server::models::traits::ToDoc;
+use server::models::structs::{DB, User};
+use server::controllers::traits::Controller;
+use server::controllers::users::UserController;
 use super::utils;
-use super::super::models::traits::ToDoc;
-use super::super::models::structs::{DB, User};
 
 use std::error::Error;
 
@@ -16,58 +18,39 @@ use bson::ordered::OrderedDocument;
 use bson::oid::ObjectId;
 use bson::Bson;
 
-pub fn read_all(req: &mut Request) -> IronResult<Response> {
-    let client = req.get::<Read<DB>>().unwrap();
-    let collection = client.db("userprofile").collection("user");
-
-    let mut users = vec![];
-    let cursor_result = collection.find(None, None);
-    if let Err(e) = cursor_result {
-        return utils::get_new_response(status::NotFound, Some(e.description().to_string()));
-    }
-    let cursor = cursor_result.unwrap();
-
-    for result in cursor {
-        if let Ok(user_bson) = result {
-            let user = User {
-                id:            user_bson.get_object_id("_id").unwrap().clone(),
-                email:         user_bson.get_str("email").unwrap().to_string(),
-                password_hash: user_bson.get_str("passwordHash").unwrap().to_string(),
-                lists:         vec![],
-                created_at:    user_bson.get_utc_datetime("createdAt").unwrap().clone(),
-                updated_at:    user_bson.get_utc_datetime("updatedAt").unwrap().clone()
-            };
-            users.push(user);
-        }
-    }
-
-    utils::get_new_response(status::Ok, Some(serde_json::to_string(&users).unwrap()))
-}
-
-pub fn create(req: &mut Request) -> IronResult<Response> {
+// Error format not right
+pub fn create(req: &mut Request, controller: &UserController) -> IronResult<Response> {
     let req_body_result = req.get::<bodyparser::Struct<User>>();
     if let Ok(None) = req_body_result {
-        return utils::get_new_response(status::UnprocessableEntity, Some("\"No request body found!\"".to_string()));
+        return utils::get_new_response(status::UnprocessableEntity, Some("\"No request body found!\"".to_string()))
     } else if let Err(err) = req_body_result {
-        return utils::get_new_response(status::UnprocessableEntity, Some(err.to_string()));
+        return utils::get_new_response(status::UnprocessableEntity, Some(err.to_string()))
     }
     let user = req_body_result.unwrap().unwrap();
 
-    let client = req.get::<Read<DB>>().unwrap();
-    let collection = client.db("userprofile").collection("user");
-
-    let insert_result = collection.insert_one(user.to_doc().clone(), None);
-    if let Ok(insert_one_result) = insert_result {
-        if let Some(write_exception) = insert_one_result.write_exception {
-                return utils::get_new_response(status::Conflict, Some(write_exception.message));
-        }
-        return utils::get_new_response(status::Conflict, Some("Error inserting new document into client.".to_string()));
-    } else if let Err(e) = insert_result {
-        return utils::get_new_response(status::Conflict, Some(e.description().to_string()));
+    let insert_result = controller.create(user);
+    if let Err(err) = insert_result {
+        return utils::get_new_response(status::Conflict, Some(err.to_string()))
     }
-    insert_result.unwrap();
 
     utils::get_new_response(status::Created, None)
+}
+
+
+pub fn read_all(req: &mut Request, controller: &UserController) -> IronResult<Response> {
+    let users_result = controller.read_all();
+    if let Err(err) = users_result {
+        return utils::get_new_response(status::Conflict, Some(err.description().to_string()))
+    }
+    let users = users_result.unwrap();
+
+    let json_result = serde_json::to_string(&users);
+    if let Err(err) = json_result {
+        return utils::get_new_response(status::UnprocessableEntity, Some(err.description().to_string()))
+    }
+    let json = json_result.unwrap();
+
+    utils::get_new_response(status::Ok, Some(json))
 }
 
 pub fn read_by_id(req: &mut Request) -> IronResult<Response> {

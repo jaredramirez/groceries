@@ -1,19 +1,19 @@
-use super::super::models::structs::User;
-use super::super::models::traits::ToDoc;
-
-use std::error::Error;
+use server::models::traits::ToDoc;
+use mongodb::Client;
 
 pub trait Controller {
-    type O: ToDoc;
-    type E: Error;
+    type O;
+    type E;
 
-    fn create<O,E>(&self, object: O) -> Result< (), E >;
+    fn new(client: Client) -> Self;
 
-    fn read_all<O,E>(&self) -> Result< Vec<O>, E >;
+    fn create(self, object: Self::O) -> Result< (), Self::E > where Self::O: ToDoc;
 
-    fn read_by_id<O,E>(&self, id: String) -> Result< O, E >;
-
-    fn update_by_id<O,E>(&self, id: String, object: O) -> Result< (), E >;
-
-    fn delete_by_id<E>(&self, id: String) -> Result< (), E >;
+    fn read_all(self) -> Result< Vec<Self::O>, Self::E >;
+    //
+    // fn read_by_id(self, id: String) -> Result< Self::O, Self::E > where Self::O: ToDoc;
+    //
+    // fn update_by_id(self, id: String, object: Self::O) -> Result< (), Self::E > where Self::O: ToDoc;
+    //
+    // fn delete_by_id(self, id: String) -> Result< (), Self::E >;
 }
