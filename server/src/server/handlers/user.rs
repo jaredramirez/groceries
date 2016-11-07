@@ -1,7 +1,7 @@
 use server::models::traits::ToDoc;
 use server::models::structs::{DB, User};
 use server::controllers::traits::Controller;
-use server::controllers::users::UserController;
+use server::controllers::user::UserController;
 use super::utils;
 
 use std::error::Error;

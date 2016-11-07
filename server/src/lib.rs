@@ -1,5 +1,7 @@
 #![feature(proc_macro)]
 
+pub mod server;
+
 extern crate iron;
 #[macro_use]
 extern crate router;
@@ -18,5 +20,3 @@ extern crate rustc_serialize;
 #[macro_use(bson, doc)]
 extern crate bson;
 extern crate mongodb;
-
-pub mod server;

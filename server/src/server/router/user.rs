@@ -1,6 +1,6 @@
 use server::handlers::user;
 use server::controllers::traits::Controller;
-use server::controllers::users::UserController;
+use server::controllers::user::UserController;
 
 use iron::prelude::*;
 use mount::Mount;
