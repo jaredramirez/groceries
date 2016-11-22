@@ -1,4 +1,5 @@
 use server::controllers::traits::Controller;
+use server::utils::traits::Constructor;
 use server::models::structs::{DB, User};
 use server::models::traits::ToDoc;
 use server::errors::QueryError;
@@ -22,15 +23,19 @@ pub struct UserController {
     client: Client
 }
 
-impl Controller for UserController {
-    type O = User;
-    type E = QueryError;
+impl Constructor for UserController {
+    type C = Client;
 
-    fn new(client: Client) -> Self {
+    fn new(client: Self::C) -> Self {
         UserController {
             client: client
         }
     }
+}
+
+impl Controller for UserController {
+    type O = User;
+    type E = QueryError;
 
     // fn create(self, object: User) -> Result<(), QueryError> where Self::O: ToDoc {
     fn create(self, object: Self::O) -> Result< (), Self::E > where Self::O: ToDoc {

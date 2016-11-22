@@ -1,6 +1,4 @@
-pub mod authentication;
 pub mod user;
-pub mod list;
 
 use server::models::structs;
 
@@ -35,9 +33,7 @@ pub fn new_remote(uri: &str) -> Chain {
 // get_new_router creates and links router with paths and all middleware
 fn get_new_router(client: Client) -> Chain {
     let mut mount = Mount::new();
-    authentication::mount_router(&mut mount);
     user::mount_router(&mut mount, client.clone());
-    list::mount_router(&mut mount);
 
     let (logger_before, logger_after) = Logger::new(None);
 
